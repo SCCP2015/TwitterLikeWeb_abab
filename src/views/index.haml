@@ -3,5 +3,62 @@
   %head
     %title= @title
     %meta{:charset => "utf-8"}
+    %meta{:charset => "utf-8", :name => "viewport", :content => "width=device-width"}
+
+    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", :rel => "stylesheet"}
+    %link{:href => "css/style.css", :rel => "stylesheet"}
   %body
-    %h1= 'Hello, ' + @title
+    .container
+      .row
+        .col-md-12 
+        %nav.navbar.navbar-default
+          .navbar-header
+            .dropdown
+              %button.btn.btn-default#user-button{:"data-toggle" => "dropdown"} 
+                ababup1192
+                %span.caret
+              %ul.dropdown-menu
+                %li 
+                  %a{:href => "https://www.google.com"} サインアウト
+      .row
+        .col-md-4
+          .row.user-info
+            .col-md-4
+              %p ツイート 
+              %p 100
+            .col-md-4
+              %p フォロー
+              %p 5
+            .col-md-4
+              %p フォロワー
+              %p 3
+          .row.user-list
+            %h3 おすすめユーザー
+            .follow-user
+              %p うに
+              %button.btn.btn-info 
+                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
+            .follow-user
+              %p かに
+              %button.btn.btn-info 
+                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
+            .follow-user
+              %p いくら
+              %button.btn.btn-info 
+                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
+            .follow-user
+              %p ほたて
+              %button.btn.btn-info 
+                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
+
+        .col-md-8
+          .row.tweet-form
+            %textarea.form-control#tweet-form-input{:placeholder => "今なにしてる？", :row => "5"}
+            %button.btn.btn-primary#tweet-button 
+              %span{:class => "glyphicon glyphicon-pencil", :"aria-hidden" => "true"} ツイート
+            .follow-user
+          .row.timeline
+            %p たちつてと
+
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
+    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}

@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+body {
+        font-family: 'メイリオ', 
+        'Hiragino Kaku Gothic Pro', sans-serif;
+}
+
+#user-button{
+        margin: 10px;
+}
+
+.user-info, .user-list, .timeline{
+        border: 1px solid #009000;
+}
+
+.user-list{
+        margin-top: 30px;
+}
+
+.follow-user{
+        margin-top: 20px;
+}
+
+#tweet-form-input{
+        width: 500px;
+        height: 100px;
+        margin-left: 50px;
+}
+
+#tweet-button{
+        margin: 10px 0px 0px 460px;
+}
+
+.timeline{
+        margin-top: 20px;
+        padding: 20px;
+        margin: 20px;
+}
+
