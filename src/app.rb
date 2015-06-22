@@ -1,6 +1,7 @@
 # coding: utf-8
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'haml'
 
 # Sinatra Main controller
 class MainApp < Sinatra::Base
@@ -8,7 +9,9 @@ class MainApp < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
   end
+
   get '/' do
-    'Hello World'
+    @title = 'TwitterLike'
+    haml :index
   end
 end
