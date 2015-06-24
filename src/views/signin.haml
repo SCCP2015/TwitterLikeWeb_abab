@@ -1,0 +1,39 @@
+!!!
+%html{:lang => "ja"}
+  %head
+    %title= @title
+    %meta{:charset => "utf-8"}
+    %meta{:charset => "utf-8", :name => "viewport", :content => "width=device-width"}
+
+    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css", :rel => "stylesheet"}
+    %link{:href => "css/signin.css", :rel => "stylesheet"}
+  %body
+    %section#main
+      .container
+        .row
+          .col-xs-12
+            .form-wrap
+              %h1 サインイン
+              %form#signin-form{:method => "POST", :action => '/Signin'}
+                .form-group
+                  %label.sr-only{:for => "name"}
+                  %input.form-control#name{:type => "text", :name => "name", :placeholder => "ID"}
+                .form-group
+                  %label.sr-only{:for => "key"}
+                  %input.form-control#pass{:type => "password", :name => "pass", :placeholder  => "パスワード"}
+                %input.btn.btn-custom.btn-lg.btn-block#btn-signin{:type => "submit", :value => "サインイン"}
+            .form-wrap#signup-form-wrap
+              %h1 登録
+              %form#signup-form{:method => "POST", :action => '/Signup'}
+                .form-group
+                  %label.sr-only{:for => "name"}
+                  %input.form-control#name{:type => "text", :name => "name", :placeholder => "ID"}
+                .form-group
+                  %label.sr-only{:for => "key"}
+                  %input.form-control#pass{:type => "password", :name => "pass", :placeholder => "パスワード"}
+                %input.btn.btn-custom.btn-lg.btn-block#btn-signup{:type => "submit", :value => "登録する"}
+
+
+
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
+    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
