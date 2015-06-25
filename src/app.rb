@@ -25,6 +25,8 @@ class MainApp < Sinatra::Base
       # response.body
       case response
       when Net::HTTPSuccess
+        @user = JSON.parse(response.body)
+        @timeline = timeline(host)
         haml :index
       when Net::HTTPBadRequest
         session[:token] = nil
@@ -86,12 +88,31 @@ class MainApp < Sinatra::Base
     redirect '/Signin'
   end
 
+  post '/Tweet' do
+    token = session[:token]
+    message = params['message']
+    if token
+      response = post_request(
+        host + 'user/auth/token', { token: token }.to_json)
+      case response
+      when Net::HTTPSuccess
+        post_request(
+          host + 'tweets', { message: message, token: token }.to_json)
+        redirect '/'
+      when Net::HTTPBadRequest
+        session[:token] = nil
+        redirect '/Signin', 303
+      end
+    else
+      redirect '/Signin', 303
+    end
+  end
+
   def get_request(path)
     uri_str = path
     uri = URI.parse(uri_str)
     req = Net::HTTP::Get.new(uri.path)
-    res = Net::HTTP.start(uri.host, uri.port) { |http| http.request(req) }
-    res.body
+    Net::HTTP.start(uri.host, uri.port) { |http| http.request(req) }
   end
 
   def post_request(path, body, params = nil)
@@ -102,5 +123,15 @@ class MainApp < Sinatra::Base
     req.set_form_data(params, ';') if params.nil? == false
     req.body = body
     Net::HTTP.start(uri.host, uri.port) { |http| http.request(req) }
+  end
+
+  def timeline(host)
+    res = get_request(host + 'tweets')
+    case res
+    when  Net::HTTPSuccess
+      JSON.parse(res.body)
+    else
+      []
+    end
   end
 end

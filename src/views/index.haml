@@ -15,7 +15,7 @@
           .navbar-header
             .dropdown
               %button.btn.btn-default#user-button{:"data-toggle" => "dropdown"} 
-                ababup1192
+                = @user['name']
                 %span.caret
               %ul.dropdown-menu
                 %li 
@@ -53,12 +53,12 @@
 
         .col-md-8
           .row.tweet-form
-            %textarea.form-control#tweet-form-input{:placeholder => "今なにしてる？", :row => "5"}
-            %button.btn.btn-primary#tweet-button 
-              %span{:class => "glyphicon glyphicon-pencil", :"aria-hidden" => "true"} ツイート
-            .follow-user
+            %form{:method => "POST", :action => '/Tweet'}
+              %textarea.form-control#tweet-form-input{:placeholder => "今なにしてる？", :row => "5", :name => "message", :type => "textarea"}
+              %input.btn.btn-primary#tweet-button{:value => "ツイート", :type => "submit"}
           .row.timeline
-            %p たちつてと
+            - @timeline.reverse.each do |tweet|
+              %p= tweet['user_id'].to_s + ': ' + tweet['message']
 
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
