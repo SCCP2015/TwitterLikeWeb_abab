@@ -27,6 +27,8 @@ class MainApp < Sinatra::Base
       when Net::HTTPSuccess
         @user = JSON.parse(response.body)
         @timeline = timeline(host)
+        user_id = @user['id']
+        @tweet_count = get_request(host + "tweets/user/#{user_id}/count").body
         haml :index
       when Net::HTTPBadRequest
         session[:token] = nil

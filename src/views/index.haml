@@ -25,7 +25,7 @@
           .row.user-info
             .col-md-4
               %p ツイート 
-              %p 100
+              %p= @tweet_count
             .col-md-4
               %p フォロー
               %p 5
@@ -58,7 +58,7 @@
               %input.btn.btn-primary#tweet-button{:value => "ツイート", :type => "submit"}
           .row.timeline
             - @timeline.reverse.each do |tweet|
-              %p= tweet['user_id'].to_s + ': ' + tweet['message']
+              %p= tweet['name'].to_s + ': ' + tweet['message']
 
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"}
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
