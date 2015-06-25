@@ -42,12 +42,22 @@ class MainApp < Sinatra::Base
   post '/Signin' do
     name = params['name']
     password = params['pass']
+    session[:token] = nil
 
     if name.empty? || password.empty?
       status 400
       'nameかパスワードが空です。'
     else
-      'ほげ'
+      response = post_request(
+        host + 'user/auth', { name: name, password: password }.to_json)
+      case response
+      when Net::HTTPSuccess
+        session[:token] = JSON.parse(response.body)['token']
+        redirect '/'
+      when Net::HTTPBadRequest
+        session[:token] = nil
+        'ログイン失敗'
+      end
     end
   end
 
@@ -69,6 +79,11 @@ class MainApp < Sinatra::Base
         '既に登録されているユーザ名です。'
       end
     end
+  end
+
+  get '/Signout' do
+    session[:token] = nil
+    redirect '/Signin'
   end
 
   def get_request(path)
