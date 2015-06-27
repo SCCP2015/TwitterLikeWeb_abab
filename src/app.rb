@@ -26,7 +26,6 @@ class MainApp < Sinatra::Base
       case response
       when Net::HTTPSuccess
         @user = JSON.parse(response.body)
-        @timeline = timeline(host)
         user_id = @user['id']
         @tweet_count = get_request(host + "tweets/user/#{user_id}/count").body
         @follow_count = get_request(
@@ -35,6 +34,9 @@ class MainApp < Sinatra::Base
           host + "followers/user/#{user_id}/followed_count").body
         @unfollow_users = JSON.parse(get_request(
           host + "followers/user/#{user_id}/unfollow").body)
+        @timeline = JSON.parse(get_request(
+          host + "tweets/user/#{user_id}").body)
+        p @timeline
         haml :index
       when Net::HTTPBadRequest
         session[:token] = nil
@@ -150,15 +152,5 @@ class MainApp < Sinatra::Base
     req.set_form_data(params, ';') if params.nil? == false
     req.body = body
     Net::HTTP.start(uri.host, uri.port) { |http| http.request(req) }
-  end
-
-  def timeline(host)
-    res = get_request(host + 'tweets')
-    case res
-    when  Net::HTTPSuccess
-      JSON.parse(res.body)
-    else
-      []
-    end
   end
 end
