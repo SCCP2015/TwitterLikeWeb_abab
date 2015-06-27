@@ -28,10 +28,10 @@
               %p= @tweet_count
             .col-md-4
               %p フォロー
-              %p 5
+              %p= @follow_count
             .col-md-4
               %p フォロワー
-              %p 3
+              %p= @followed_count
           .row.user-list
             %h3 おすすめユーザー
             - @unfollow_users.each do |user|

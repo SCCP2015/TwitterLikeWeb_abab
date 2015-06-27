@@ -29,6 +29,10 @@ class MainApp < Sinatra::Base
         @timeline = timeline(host)
         user_id = @user['id']
         @tweet_count = get_request(host + "tweets/user/#{user_id}/count").body
+        @follow_count = get_request(
+          host + "followers/user/#{user_id}/count").body
+        @followed_count = get_request(
+          host + "followers/user/#{user_id}/followed_count").body
         @unfollow_users = JSON.parse(get_request(
           host + "followers/user/#{user_id}/unfollow").body)
         haml :index
