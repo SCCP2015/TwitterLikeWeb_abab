@@ -29,6 +29,8 @@ class MainApp < Sinatra::Base
         @timeline = timeline(host)
         user_id = @user['id']
         @tweet_count = get_request(host + "tweets/user/#{user_id}/count").body
+        @unfollow_users = JSON.parse(get_request(
+          host + "followers/user/#{user_id}/unfollow").body)
         haml :index
       when Net::HTTPBadRequest
         session[:token] = nil
@@ -61,6 +63,8 @@ class MainApp < Sinatra::Base
       when Net::HTTPBadRequest
         session[:token] = nil
         'ログイン失敗'
+      else
+        'サーバーエラー'
       end
     end
   end
@@ -107,6 +111,23 @@ class MainApp < Sinatra::Base
       end
     else
       redirect '/Signin', 303
+    end
+  end
+
+  post '/Follow' do
+    token = session[:token]
+    follower_id = params['follower_id'].to_i
+    if token
+      response = post_request(
+        host + 'followers', { token: token, follower_id: follower_id }.to_json)
+      case response
+      when Net::HTTPSuccess
+        redirect '/'
+      when Net::HTTPBadRequest
+        redirect '/', 303
+      end
+    else
+      redirect '/', 303
     end
   end
 

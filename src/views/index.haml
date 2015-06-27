@@ -34,22 +34,12 @@
               %p 3
           .row.user-list
             %h3 おすすめユーザー
-            .follow-user
-              %p うに
-              %button.btn.btn-info 
-                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
-            .follow-user
-              %p かに
-              %button.btn.btn-info 
-                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
-            .follow-user
-              %p いくら
-              %button.btn.btn-info 
-                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
-            .follow-user
-              %p ほたて
-              %button.btn.btn-info 
-                %span{:class => "glyphicon glyphicon-user", :"aria-hidden" => "true"} フォロー
+            - @unfollow_users.each do |user|
+              %form{:method => "POST", :action => '/Follow'}
+                .follow-user
+                  %p= user['name']
+                  %input{:type => "hidden", :name => "follower_id", :value => user["id"]}
+                  %input.btn.btn-info{:value => "フォロー", :type => "submit"} 
 
         .col-md-8
           .row.tweet-form
